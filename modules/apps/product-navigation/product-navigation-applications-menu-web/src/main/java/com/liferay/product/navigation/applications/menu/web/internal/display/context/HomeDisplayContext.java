@@ -153,6 +153,8 @@ public class HomeDisplayContext {
 					"id", panelApp.getPortletId()
 				).put(
 					"label", panelApp.getLabel(_themeDisplay.getLocale())
+				).put(
+					"leadingIcon", panelApp.getIcon()
 				).build());
 		}
 
