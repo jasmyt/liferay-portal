@@ -68,8 +68,8 @@ public class PanelCategoryHelper {
 	public PanelCategory getActivePanelCategory(
 		String panelCategoryKey, String portletId, ThemeDisplay themeDisplay) {
 
-		for (PanelCategory childPanelCategory : getChildPanelCategories(
-				panelCategoryKey, themeDisplay)) {
+		for (PanelCategory childPanelCategory :
+				getChildPanelCategories(panelCategoryKey, themeDisplay)) {
 
 			if (containsPortlet(portletId, childPanelCategory.getKey())) {
 				return childPanelCategory;
