@@ -97,8 +97,7 @@ public class AssetLibraryDTOConverter
 				setCreator(
 					() -> CreatorUtil.toCreator(
 						_portal,
-						_userLocalService.fetchUser(
-							group.getCreatorUserId())));
+						_userLocalService.fetchUser(group.getCreatorUserId())));
 				setCreatorUserId(group::getCreatorUserId);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(
