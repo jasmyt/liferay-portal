@@ -10,6 +10,7 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.ConnectedSite;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
@@ -93,6 +94,13 @@ public class AssetLibraryDTOConverter
 							depotEntryGroupRel -> _toConnectedSite(
 								depotEntryGroupRel, dtoConverterContext),
 							ConnectedSite.class)));
+				setCreator(
+					() -> NestedFieldsSupplier.supply(
+						"creator",
+						fieldName -> CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								group.getCreatorUserId()))));
 				setCreatorUserId(group::getCreatorUserId);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(
