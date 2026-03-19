@@ -95,12 +95,10 @@ public class AssetLibraryDTOConverter
 								depotEntryGroupRel, dtoConverterContext),
 							ConnectedSite.class)));
 				setCreator(
-					() -> NestedFieldsSupplier.supply(
-						"creator",
-						fieldName -> CreatorUtil.toCreator(
-							_portal,
-							_userLocalService.fetchUser(
-								group.getCreatorUserId()))));
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(
+							group.getCreatorUserId())));
 				setCreatorUserId(group::getCreatorUserId);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(
