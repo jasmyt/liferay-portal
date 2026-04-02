@@ -104,6 +104,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -1220,6 +1221,28 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			destinationURL = HttpComponentsUtil.setParameter(
 				destinationURL, "doAsUserId", doAsUserId);
+		}
+
+		// An attempt to address the issue in LPP-63343
+		Set<String> portletParams = Set.of(
+			"p_p_id",
+			"p_p_lifecycle",
+			"p_p_auth",
+			"p_p_resource_id",
+			"p_p_cacheability",
+			"_com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet_backURL",
+			"_com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet_selectedPortletId"
+		);
+
+		Set<String> paramNames = HttpComponentsUtil.getParameterNames(
+			HttpComponentsUtil.getQueryString(httpServletRequest));
+
+		paramNames.removeIf(param -> !portletParams.contains(param));
+
+		for (String paramName : paramNames) {
+			destinationURL = HttpComponentsUtil.setParameter(
+				destinationURL, paramName,
+				ParamUtil.getString(httpServletRequest, paramName));
 		}
 
 		return new Redirect(destinationURL, true, redirect.isPermanent());
